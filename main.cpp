@@ -265,7 +265,7 @@ void tidakValid();
 void gajiKaryawan() {
     kepala();
     bool ketemu = false;
-    int gajipokok, tunjabatan, tunkeluarga, tunkesehatan, uangmakan, uangbonus;
+    int gajipokok, tunjabatan, tunkeluarga, tunkesehatan, uangmakan, jamlembur, uanglembur, lembur;
     string key;
 
     cout << "||                      Gaji Karyawan                       ||\n";
@@ -279,63 +279,82 @@ void gajiKaryawan() {
             kepala();
             cout << "||                      Gaji Karyawan                       ||\n";
             cout << "==============================================================\n";
-            cout << "Nama    : " << karyawan[i].nama << endl;
-            cout << "Jabatan : " << karyawan[i].jabatan << endl;
+            cout << "Nama       : " << karyawan[i].nama << endl;
+            cout << "Jabatan    : " << karyawan[i].jabatan << endl;
+            cout << "Jam Lembur : ";
+            cin >> jamlembur;
+            cout << "==============================================================\n";
+
 
             if (karyawan[i].jabatan == "Manager") {
                 gajipokok = 6200000;
                 tunjabatan = 1000000;
                 tunkeluarga = gajipokok * 0.10;
                 tunkesehatan = gajipokok * 0.20;
+                uanglembur = 100000;
+                lembur = uanglembur * jamlembur;
             }
             if (karyawan[i].jabatan == "Supervisor") {
                 gajipokok = 5400000;
                 tunjabatan = 800000;
                 tunkeluarga = gajipokok * 0.10;
                 tunkesehatan = gajipokok * 0.20;
+                uanglembur = 80000;
+                lembur = uanglembur * jamlembur;
             }
             if (karyawan[i].jabatan == "Specialist") {
                 gajipokok = 4600000;
                 tunjabatan = 720000;
                 tunkeluarga = gajipokok * 0.10;
                 tunkesehatan = gajipokok * 0.20;
+                uanglembur = 72000;
+                lembur = uanglembur * jamlembur;
             }
             if (karyawan[i].jabatan == "Administrator") {
                 gajipokok = 3600000;
                 tunjabatan = 480000;
                 tunkeluarga = gajipokok * 0.10;
                 tunkesehatan = gajipokok * 0.20;
+                uanglembur = 48000;
+                lembur = uanglembur * jamlembur;
             }
             if (karyawan[i].jabatan == "Staff") {
                 gajipokok = 3500000;
                 tunjabatan = 420000;
                 tunkeluarga = gajipokok * 0.10;
                 tunkesehatan = gajipokok * 0.20;
+                uanglembur = 42000;
+                lembur = uanglembur * jamlembur;
             }
             if (karyawan[i].jabatan == "CleaningService") {
                 gajipokok = 3000000;
                 tunjabatan = 350000;
                 tunkeluarga = gajipokok * 0.10;
                 tunkesehatan = gajipokok * 0.20;
+                uanglembur = 42000;
+                lembur = uanglembur * jamlembur;
             }
 
             cout << "Gaji Pokok          : Rp." << gajipokok << endl;
+            cout << "Uang Lembur         : Rp." << lembur << endl;
             cout << "Tunjangan Jabatan   : Rp." << tunjabatan << endl;
             cout << "Tunjangan Keluarga  : Rp." << tunkeluarga << endl;
             cout << "Tunjangan Kesehatan : Rp." << tunkesehatan << endl;
             cout << "==============================================================\n";
-            cout << "Total upah          : Rp." << gajipokok+tunjabatan+tunkeluarga+tunkesehatan << endl;
+            cout << "Total upah          : Rp." << gajipokok+tunjabatan+tunkeluarga+tunkesehatan+lembur << endl;
             cout << "==============================================================\n";
-        ketemu = true;
+           ketemu = true;
         }
-        if (ketemu == true)
-        cout << "Kembali ke menu? (y) ";
-        cin >> balik;
-        if (balik == 'y')
-        {
-            kepala();
-            bersih();
-            return menu2();
+        if (!ketemu) {
+        cout << "Mohon maaf, nama yang anda cari tidak ditemukan.\n";
+    }
+
+    cout << "\nKembali ke menu? (y) ";
+    cin >> balik;
+    if (balik == 'y') {
+        kepala();
+        bersih();
+        return menu2();
         }
     }
 }
@@ -347,7 +366,7 @@ void cari() {
     string key;
     cout << "||                      PENCARIAN DATA                      ||\n";
     cout << "==============================================================\n";
-    cout << "Masukan nama yang ingin anda cari :";
+    cout << "Masukan nama yang ingin anda cari :\n";
     cout << "Cari data: ";
     cin >> key;
     for (int i = 0; i < dex; i++)
