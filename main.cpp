@@ -17,10 +17,12 @@ void simpan2();
 void baca_data();
 void baca_pass();
 void menu2();
+void gajiKaryawan();
 
 int dex = 0;
 int jumStruct = 10;
 bool urut = false;
+char balik;
 
 struct data_kar {
     string jabatan;
@@ -174,7 +176,7 @@ void daftar() {
         }
     }
 
-    simpan();
+    simpan2();
 
     cout << "============ Akun anda telah berhasil dibuat! ============\n\n";
     cout << "Tekan Enter untuk kembali ke Menu Utama...";
@@ -211,9 +213,9 @@ void menu2() {
     cout << "[1] Cari Data Karyawan\n";
     cout << "[2] Tambah Data Karyawan\n";
     cout << "[3] Lihat Semua Data Karyawan\n";
-    cout << "[4] Urutkan Nama Ascending\n";
+    cout << "[4] Gaji Karyawan\n";
     cout << "[5] Logout\n";
-    cout << "[6] Exit\n";
+    cout << "[6] Exit Program\n";
 
 
 
@@ -244,8 +246,8 @@ void menu2() {
         }
         break;
     case 4:
-        urut = true;
-        return menu2();
+        bersih();
+        gajiKaryawan();
         break;
     case 5:
         return menu();
@@ -260,6 +262,83 @@ void terHapus();
 void terEdit();
 void tidakValid();
 
+void gajiKaryawan() {
+    kepala();
+    bool ketemu = false;
+    int gajipokok, tunjabatan, tunkeluarga, tunkesehatan, uangmakan, uangbonus;
+    string key;
+
+    cout << "||                      Gaji Karyawan                       ||\n";
+    cout << "==============================================================\n";
+    cout << "Masukkan nama : ";
+    cin >> key;
+
+    for (int i = 0; i < dex; i++) {
+        if (key == karyawan[i].nama) {
+            bersih();
+            kepala();
+            cout << "||                      Gaji Karyawan                       ||\n";
+            cout << "==============================================================\n";
+            cout << "Nama    : " << karyawan[i].nama << endl;
+            cout << "Jabatan : " << karyawan[i].jabatan << endl;
+
+            if (karyawan[i].jabatan == "Manager") {
+                gajipokok = 6200000;
+                tunjabatan = 1000000;
+                tunkeluarga = gajipokok * 0.10;
+                tunkesehatan = gajipokok * 0.20;
+            }
+            if (karyawan[i].jabatan == "Supervisor") {
+                gajipokok = 5400000;
+                tunjabatan = 800000;
+                tunkeluarga = gajipokok * 0.10;
+                tunkesehatan = gajipokok * 0.20;
+            }
+            if (karyawan[i].jabatan == "Specialist") {
+                gajipokok = 4600000;
+                tunjabatan = 720000;
+                tunkeluarga = gajipokok * 0.10;
+                tunkesehatan = gajipokok * 0.20;
+            }
+            if (karyawan[i].jabatan == "Administrator") {
+                gajipokok = 3600000;
+                tunjabatan = 480000;
+                tunkeluarga = gajipokok * 0.10;
+                tunkesehatan = gajipokok * 0.20;
+            }
+            if (karyawan[i].jabatan == "Staff") {
+                gajipokok = 3500000;
+                tunjabatan = 420000;
+                tunkeluarga = gajipokok * 0.10;
+                tunkesehatan = gajipokok * 0.20;
+            }
+            if (karyawan[i].jabatan == "CleaningService") {
+                gajipokok = 3000000;
+                tunjabatan = 350000;
+                tunkeluarga = gajipokok * 0.10;
+                tunkesehatan = gajipokok * 0.20;
+            }
+
+            cout << "Gaji Pokok          : Rp." << gajipokok << endl;
+            cout << "Tunjangan Jabatan   : Rp." << tunjabatan << endl;
+            cout << "Tunjangan Keluarga  : Rp." << tunkeluarga << endl;
+            cout << "Tunjangan Kesehatan : Rp." << tunkesehatan << endl;
+            cout << "==============================================================\n";
+            cout << "Total upah          : Rp." << gajipokok+tunjabatan+tunkeluarga+tunkesehatan << endl;
+            cout << "==============================================================\n";
+        ketemu = true;
+        }
+        if (ketemu == true)
+        cout << "Kembali ke menu? (y) ";
+        cin >> balik;
+        if (balik == 'y')
+        {
+            kepala();
+            bersih();
+            return menu2();
+        }
+    }
+}
 void cari() {
     kepala();
     bool ketemu = false;
@@ -268,6 +347,7 @@ void cari() {
     string key;
     cout << "||                      PENCARIAN DATA                      ||\n";
     cout << "==============================================================\n";
+    cout << "Masukan nama yang ingin anda cari :";
     cout << "Cari data: ";
     cin >> key;
     for (int i = 0; i < dex; i++)
@@ -281,21 +361,22 @@ void cari() {
             cout << "Data "
                  << "\"" << karyawan[i].nama << "\""
                  << " ditemukan\n\n";
+            cout << "==============================================================\n";
             cout << setw(5) << left << "No"
                  << setw(13) << left << "Nama"
                  << setw(8) << left << "Gender"
                  << setw(5) << left << "Umur"
-                 << setw(13) << left << "Alamat"
+                 << setw(10) << left << "Alamat"
                  << setw(10) << left << "Jabatan"
                  << setw(10) << left << "Status" << endl;
-            cout << "=============================================================\n";
+            cout << "==============================================================\n";
 
             if (karyawan[i].nama != "")
             {
                 cout << setw(5) << left << i + 1 << setw(13) << left;
                 cout << karyawan[i].nama << setw(8) << left;
                 cout << karyawan[i].gender << setw(5) << left;
-                cout << karyawan[i].umur << setw(13) << left;
+                cout << karyawan[i].umur << setw(10) << left;
                 cout << karyawan[i].alamat << setw(10) << left;
                 cout << karyawan[i].jabatan << setw(10) << left;
                 cout << karyawan[i].status << endl;
@@ -307,7 +388,7 @@ void cari() {
     if (ketemu == true)
     {
         int pilih;
-        cout << "\n=============================================================\n";
+        cout << "\n===============================================================\n";
         cout << "[1] Hapus Data\n";
         cout << "[2] Edit Data\n";
         cout << "[3] Kembali ke Menu Pilihan\n";
@@ -366,8 +447,6 @@ void cari() {
     }
 }
 
-char balik;
-
 void tidakValid()
 {
     bersih();
@@ -414,11 +493,51 @@ void terHapus()
 void tambah() {
     bersih();
     kepala();
-    for (int i = 0; i < jumStruct; i++)
-    {
-        if (karyawan[i].nama == "")
-        {
-            cout << "\nTambah data: \n";
+    cout << "||                        TAMBAH DATA                       ||\n";
+    cout << "==============================================================\n";
+
+    cout << "Pilih Jabatan:\n";
+    cout << "1. Manager\n";
+    cout << "2. Supervisor\n";
+    cout << "3. Specialist\n";
+    cout << "4. Administrator\n";
+    cout << "5. Staff\n";
+    cout << "6. CleaningService\n";
+    cout << "Pilihan: ";
+
+    int pilihJabatan;
+    cin >> pilihJabatan;
+
+    string jabatan;
+
+    // Map the user's choice to the corresponding job position
+    switch (pilihJabatan) {
+        case 1:
+            jabatan = "Manager";
+            break;
+        case 2:
+            jabatan = "Supervisor";
+            break;
+        case 3:
+            jabatan = "Specialist";
+            break;
+        case 4:
+            jabatan = "Administrator";
+            break;
+        case 5:
+            jabatan = "Staff";
+            break;
+        case 6:
+            jabatan = "CleaningService";
+        default:
+            bersih();
+            return menu2();
+            break;
+    }
+
+    for (int i = 0; i < jumStruct; i++) {
+        if (karyawan[i].nama == "") {
+            cout << "\n[Tambah data] \n";
             cout << "Nama: ";
             cin >> karyawan[i].nama;
             cout << "Umur: ";
@@ -429,17 +548,18 @@ void tambah() {
             cin >> karyawan[i].alamat;
             cout << "Status: ";
             cin >> karyawan[i].status;
-            cout << "Jabatan: ";
-            cin >> karyawan[i].jabatan;
+            karyawan[i].jabatan = jabatan;
+
             break;
         }
     }
-    dex++;
-    simpan2();
-    cout << "========== Data berhasil ditambahkan! ==========\n\n";
-    system ("pause"); // untuk pause agar pengguna bisa melohat output diatas terlebih dahulu
-    bersih();
 
+    dex++;
+    simpan();  // Save the data to the file
+    cout << "========== Data berhasil ditambahkan! ==========\n\n";
+    system("pause"); // untuk pause agar pengguna bisa melihat output di atas terlebih dahulu
+    bersih();
+    return menu2();
 }
 
 void tampil() {
@@ -453,9 +573,9 @@ void tampil() {
          << setw(13) << left << "Nama"
          << setw(8) << left << "Gender"
          << setw(5) << left << "Umur"
-         << setw(13) << left << "Alamat"
-         << setw(10) << left << "Status"
-         << setw(10) << left << "Jabatan" << endl;
+         << setw(10) << left << "Alamat"
+         << setw(10) << left << "Jabatan"
+         << setw(10) << left << "Status" << endl;
     cout << "==============================================================\n";
     for (i = 0; i < jumStruct; i++)
     {
@@ -497,7 +617,7 @@ void tampil() {
             cout << setw(5) << left << no << setw(13) << left;
             cout << karyawan[i].nama << setw(8) << left;
             cout << karyawan[i].gender << setw(5) << left;
-            cout << karyawan[i].umur << setw(13) << left;
+            cout << karyawan[i].umur << setw(10) << left;
             cout << karyawan[i].alamat << setw(10) << left;
             cout << karyawan[i].jabatan<< setw(10) << left;
             cout << karyawan[i].status << endl;
