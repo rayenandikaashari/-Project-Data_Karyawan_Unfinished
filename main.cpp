@@ -275,7 +275,7 @@ void gajiKaryawan() {
     cout << "Masukkan nama: ";
     cin >> key;
 
-    for (int i = 0; i <= dex; i++) {
+    for (int i = 0; i < dex; i++) {
         if (key == karyawan[i].nama) {
             ketemu = true;
             bersih();
@@ -288,65 +288,49 @@ void gajiKaryawan() {
             cin >> jamlembur;
             cout << "==============================================================\n";
 
-
+            // Logika perhitungan gaji berdasarkan jabatan
             if (karyawan[i].jabatan == "Manager") {
                 gajipokok = 6200000;
                 tunjabatan = 1000000;
-                tunkeluarga = gajipokok * 0.10;
-                tunkesehatan = gajipokok * 0.20;
                 uanglembur = 100000;
-                lembur = uanglembur * jamlembur;
-            }
-            if (karyawan[i].jabatan == "Supervisor") {
+            } else if (karyawan[i].jabatan == "Supervisor") {
                 gajipokok = 5400000;
                 tunjabatan = 800000;
-                tunkeluarga = gajipokok * 0.10;
-                tunkesehatan = gajipokok * 0.20;
                 uanglembur = 80000;
-                lembur = uanglembur * jamlembur;
-            }
-            if (karyawan[i].jabatan == "Specialist") {
+            } else if (karyawan[i].jabatan == "Specialist") {
                 gajipokok = 4600000;
                 tunjabatan = 720000;
-                tunkeluarga = gajipokok * 0.10;
-                tunkesehatan = gajipokok * 0.20;
                 uanglembur = 72000;
-                lembur = uanglembur * jamlembur;
-            }
-            if (karyawan[i].jabatan == "Administrator") {
+            } else if (karyawan[i].jabatan == "Administrator") {
                 gajipokok = 3600000;
                 tunjabatan = 480000;
-                tunkeluarga = gajipokok * 0.10;
-                tunkesehatan = gajipokok * 0.20;
                 uanglembur = 48000;
-                lembur = uanglembur * jamlembur;
-            }
-            if (karyawan[i].jabatan == "Staff") {
+            } else if (karyawan[i].jabatan == "Staff") {
                 gajipokok = 3500000;
                 tunjabatan = 420000;
-                tunkeluarga = gajipokok * 0.10;
-                tunkesehatan = gajipokok * 0.20;
                 uanglembur = 42000;
-                lembur = uanglembur * jamlembur;
-            }
-            if (karyawan[i].jabatan == "Cleaning Service") {
+            } else if (karyawan[i].jabatan == "Cleaning Service") {
                 gajipokok = 3000000;
                 tunjabatan = 350000;
-                tunkeluarga = gajipokok * 0.10;
-                tunkesehatan = gajipokok * 0.20;
-                uanglembur = 42000;
-                lembur = uanglembur * jamlembur;
+                uanglembur = 35000;
             }
+            tunkeluarga = gajipokok * 0.10;
+            tunkesehatan = gajipokok * 0.20;
+            lembur = uanglembur * jamlembur;
+
+            // Menampilkan rincian gaji
             cout << "Gaji Pokok          : Rp." << gajipokok << endl;
             cout << "Uang Lembur         : Rp." << lembur << endl;
             cout << "Tunjangan Jabatan   : Rp." << tunjabatan << endl;
             cout << "Tunjangan Keluarga  : Rp." << tunkeluarga << endl;
             cout << "Tunjangan Kesehatan : Rp." << tunkesehatan << endl;
             cout << "==============================================================\n";
-            cout << "Total upah          : Rp." << gajipokok+tunjabatan+tunkeluarga+tunkesehatan+lembur << endl;
+            cout << "Total upah          : Rp." << gajipokok + tunjabatan + tunkeluarga + tunkesehatan + lembur << endl;
             cout << "==============================================================\n";
         }
-        if (!ketemu) {
+    }
+
+    if (!ketemu) {
         cout << "Mohon maaf, nama yang anda cari tidak ditemukan.\n";
     }
 
@@ -356,9 +340,9 @@ void gajiKaryawan() {
         kepala();
         bersih();
         return menu2();
-        }
     }
 }
+
 void cari() {
     kepala();
     bool ketemu = false;
@@ -687,14 +671,15 @@ void baca_data() {
     ifstream dataku;
     dataku.open("dataku.txt", ios::app | ios::in | ios::out);
 
-    if (!dataku.is_open()) {
+    if (dataku.fail())
+    {
         cout << "Gagal membuka file dataku.txt untuk pembacaan" << endl;
-    } else {
+    } else if (dataku.is_open())
+        {
         while (getline(dataku, data_perbaris)) {
             parse_baris(data_perbaris, no_index);
             no_index++;
         }
-        dataku.close();
     }
 }
 void baca_pass()
